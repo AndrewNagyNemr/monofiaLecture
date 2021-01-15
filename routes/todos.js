@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { ToDo, validate } = require("../models/todos");
+const authenticate = require("../middlewares/auth");
 
 router.get("/", async (req, res) => {
   const todos = await ToDo.find();
@@ -24,7 +25,7 @@ router.post("/", async (req, res) => {
   res.send(todo);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticate, async (req, res) => {
   const { id } = req.params;
   const { title, body } = req.body;
 
@@ -38,7 +39,7 @@ router.put("/:id", async (req, res) => {
   res.send(await todo.save());
 });
 
-router.delete("/:_id", async (req, res) => {
+router.delete("/:_id", authenticate, async (req, res) => {
   const { _id } = req.params;
   const todo = await ToDo.findById(_id);
   await ToDo.deleteOne({ _id });
