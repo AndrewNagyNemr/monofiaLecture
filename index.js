@@ -27,6 +27,10 @@ mongoose
 
 const app = express();
 
+app.get("/", (req, res) => {
+  req.send("<h1>Hello form my first deployed app</h1>");
+});
+
 //middleware
 
 // app.use(authenticate)
