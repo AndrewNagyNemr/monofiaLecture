@@ -3,6 +3,7 @@
     "password": "newproject_PASS"
   },
   "database":{
-    "dbPass":"dbPass"
-  }
+    "dbconnection":"dbconnection"
+  },
+  "JWT_Private_Key":"JWT_Private_Key"
 }

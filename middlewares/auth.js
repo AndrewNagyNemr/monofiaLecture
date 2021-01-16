@@ -1,20 +1,17 @@
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
-const authenticate = (req, res, next) => {
-  const token = req.header("x-auth-token");
-  if(!token) res.status(401).send("No token was provided")
-  
+const auth = (req, res, next) => {
+  const token = req.header("X-Auth-Token");
+  if (!token) return res.status(400).send("no token was provided");
+  let user;
   try {
-    jwt.verify(token, "123456")
-    
+    user = jwt.verify(token, config.get("JWT_Private_Key"));
   } catch (error) {
-    
+    return res.status(401).send("invalid token");
   }
-  if (username !== "admin" && password !== "admin")
-    return res.status(401).send("username or password are wrong");
-
+  //   req.user = user;
   next();
 };
 
-module.exports = authenticate;
+module.exports = auth;
