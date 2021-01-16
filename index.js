@@ -28,7 +28,7 @@ mongoose
 const app = express();
 
 app.get("/", (req, res) => {
-  req.send("<h1>Hello form my first deployed app</h1>");
+  res.send("<h1>Hello form my first deployed app</h1>");
 });
 
 //middleware
@@ -41,5 +41,5 @@ app.use("/api/todos", todoRouter);
 // app.use("/api/users", usersRouter);
 // app.use("/api/auth", auth);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port, () => console.log(`listening on port:${port}`));
