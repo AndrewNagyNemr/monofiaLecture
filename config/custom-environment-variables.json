@@ -1,0 +1,8 @@
+{
+  "mail": {
+    "password": "newproject_PASS"
+  },
+  "database":{
+    "dbPass":"dbPass"
+  }
+}

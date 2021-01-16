@@ -1,0 +1,10 @@
+{
+  "appName": "Dev app",
+  "mail": {
+    "server": "dev-mail",
+    "password": "1234"
+  },
+  "database":{
+      "dbPass":""
+  }
+}

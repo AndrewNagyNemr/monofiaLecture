@@ -1,15 +1,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const todoRouter = require("./routes/todos");
-const logger = require("./middlewares/logger");
-// const authenticate  = require("./middlewares/auth");
-// const userRouter = require("./routes/users");
+const config = require("config");
+const helmet = require("helmet");
+const compression = require("compression");
 
+const todoRouter = require("./routes/todos");
+// const usersRouter = require("./routes/users");
+// const authRouter = require("./routes/auth");
+// const authenticate  = require("./middlewares/auth");
+
+const dbPass = config.get("database.dbPass");
 mongoose
-  .connect("mongodb://localhost/monofiaDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    `mongodb+srv://andrew:${dbPass}@cluster0.udlfz.mongodb.net/Cluster0?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("connected to mongo database");
   })
@@ -20,14 +28,14 @@ mongoose
 const app = express();
 
 //middleware
+
 // app.use(authenticate)
 app.use(express.json());
-
-console.log(process.env.ENV);
-if (process.env.ENV !== "production") app.use(logger);
-
+app.use(helmet());
+app.use(compression());
 app.use("/api/todos", todoRouter);
-// app.use("/api/users", userRouter);
+// app.use("/api/users", usersRouter);
+// app.use("/api/auth", auth);
 
-const port = process.env.PORT || port;
-app.listen(port, () => console.log(`listening on http://localhost:${port}`));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`listening on port:${port}`));
